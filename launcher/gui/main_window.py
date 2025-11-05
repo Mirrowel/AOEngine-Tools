@@ -24,9 +24,6 @@ class App(ctk.CTk):
     def __init__(self, master=None):
         super().__init__(master)
 
-        self.title("AOEngine Launcher")
-        self.geometry("700x500")
-
         # Set up fly agaric theme
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("dark-blue")
@@ -36,6 +33,10 @@ class App(ctk.CTk):
 
         # --- Localization ---
         self.translator = init_translator("launcher/locale", self.config_manager.get_config().language)
+
+        # Set window properties (after translator is initialized)
+        self.title(self.translator.get("app_title", default="🍄 AOEngine Launcher"))
+        self.geometry("700x500")
 
         self._create_widgets()
         
