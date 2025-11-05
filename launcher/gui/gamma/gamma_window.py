@@ -61,7 +61,8 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         super().__init__(parent)
 
         self.geometry("950x600")
-        self.resizable(True, True)
+        self.minsize(950, 600)
+        self.resizable(True, True)  # Allow resizing for complex tabbed interface
 
         self.launch_aoengine_callback = launch_aoengine_callback
         self.config_manager = ConfigManager()
@@ -129,7 +130,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         logo_label = ctk.CTkLabel(
             logo_frame,
-            text="GAMMA",
+            text=self.translator.get("gamma_logo", default="GAMMA"),
             font=ctk.CTkFont(size=24, weight="bold"),
             text_color=GAMMA_PRIMARY
         )
@@ -137,7 +138,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         version_label = ctk.CTkLabel(
             logo_frame,
-            text="v0.22.0.0",
+            text=self.translator.get("gamma_version", default="v0.22.0.0"),
             font=ctk.CTkFont(size=10),
             text_color="gray"
         )
@@ -153,7 +154,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         downgrade_btn = ctk.CTkButton(
             utility_frame,
-            text="Downgrade ModOrganizer",
+            text=self.translator.get("gamma_downgrade_mo2", default="Downgrade ModOrganizer"),
             fg_color="transparent",
             border_width=1,
             border_color="gray50",
@@ -166,7 +167,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         first_install_btn = ctk.CTkButton(
             utility_frame,
-            text="First Install Initialization",
+            text=self.translator.get("gamma_first_install", default="First Install Initialization"),
             fg_color="transparent",
             border_width=1,
             border_color="gray50",
@@ -180,7 +181,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         defender_btn = ctk.CTkButton(
             utility_frame,
-            text="Add Defender Exclusions",
+            text=self.translator.get("gamma_add_defender", default="Add Defender Exclusions"),
             fg_color="transparent",
             border_width=1,
             border_color="gray50",
@@ -193,7 +194,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         longpaths_btn = ctk.CTkButton(
             utility_frame,
-            text="Enable Long Paths",
+            text=self.translator.get("gamma_enable_longpaths", default="Enable Long Paths"),
             fg_color="transparent",
             border_width=1,
             border_color="gray50",
@@ -211,7 +212,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         # Main Install/Update button (large, highlighted)
         self.install_button = ctk.CTkButton(
             sidebar,
-            text="Install / Update\nGAMMA",
+            text=self.translator.get("gamma_install_update", default="Install / Update\nGAMMA"),
             fg_color=GAMMA_PRIMARY,
             hover_color=GAMMA_SECONDARY,
             text_color="white",
@@ -229,7 +230,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.check_md5_var = ctk.BooleanVar(value=True)
         check_md5_cb = ctk.CTkCheckBox(
             options_frame,
-            text="Check MD5",
+            text=self.translator.get("gamma_check_md5", default="Check MD5"),
             variable=self.check_md5_var,
             font=ctk.CTkFont(size=11),
             fg_color=GAMMA_PRIMARY,
@@ -240,7 +241,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.force_git_var = ctk.BooleanVar(value=True)
         force_git_cb = ctk.CTkCheckBox(
             options_frame,
-            text="Force git download",
+            text=self.translator.get("gamma_force_git", default="Force git download"),
             variable=self.force_git_var,
             font=ctk.CTkFont(size=11),
             fg_color=GAMMA_PRIMARY,
@@ -251,7 +252,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.force_zip_var = ctk.BooleanVar(value=False)
         force_zip_cb = ctk.CTkCheckBox(
             options_frame,
-            text="Force zip extraction",
+            text=self.translator.get("gamma_force_zip", default="Force zip extraction"),
             variable=self.force_zip_var,
             font=ctk.CTkFont(size=11),
             fg_color=GAMMA_PRIMARY,
@@ -262,7 +263,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.delete_reshade_var = ctk.BooleanVar(value=True)
         delete_reshade_cb = ctk.CTkCheckBox(
             options_frame,
-            text="Delete ReShade DLLs",
+            text=self.translator.get("gamma_delete_reshade", default="Delete ReShade DLLs"),
             variable=self.delete_reshade_var,
             font=ctk.CTkFont(size=11),
             fg_color=GAMMA_PRIMARY,
@@ -273,7 +274,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.preserve_ltx_var = ctk.BooleanVar(value=False)
         preserve_ltx_cb = ctk.CTkCheckBox(
             options_frame,
-            text="Preserve user.ltx",
+            text=self.translator.get("gamma_preserve_ltx", default="Preserve user.ltx"),
             variable=self.preserve_ltx_var,
             font=ctk.CTkFont(size=11),
             fg_color=GAMMA_PRIMARY,
@@ -288,7 +289,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         # Play button
         play_button = ctk.CTkButton(
             sidebar,
-            text="Play",
+            text=self.translator.get("gamma_play", default="Play"),
             fg_color=GAMMA_SUCCESS,
             hover_color="#45a049",
             text_color="white",
@@ -301,7 +302,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         # Console Log button
         console_button = ctk.CTkButton(
             sidebar,
-            text="Console Log",
+            text=self.translator.get("gamma_console_log", default="Console Log"),
             fg_color="transparent",
             border_width=1,
             border_color=GAMMA_PRIMARY,
@@ -316,7 +317,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         # Settings button
         settings_button = ctk.CTkButton(
             sidebar,
-            text="Settings",
+            text=self.translator.get("gamma_settings", default="Settings"),
             fg_color="transparent",
             border_width=1,
             border_color="gray50",
@@ -361,11 +362,11 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.tabview.grid(row=0, column=1, sticky="nsew", padx=0, pady=0)
 
         # Add tabs
-        self.tabview.add("Main")
-        self.tabview.add("Mods List")
-        self.tabview.add("GAMMA Updates")
-        self.tabview.add("ModDB Updates")
-        self.tabview.add("Backup")
+        self.tabview.add(self.translator.get("gamma_tab_main", default="Main"))
+        self.tabview.add(self.translator.get("gamma_tab_mods_list", default="Mods List"))
+        self.tabview.add(self.translator.get("gamma_tab_gamma_updates", default="GAMMA Updates"))
+        self.tabview.add(self.translator.get("gamma_tab_moddb_updates", default="ModDB Updates"))
+        self.tabview.add(self.translator.get("gamma_tab_backup", default="Backup"))
 
         # Configure Main tab
         self._create_main_tab()
@@ -384,7 +385,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
     def _create_main_tab(self):
         """Create main installation tab content."""
-        main_tab = self.tabview.tab("Main")
+        main_tab = self.tabview.tab(self.translator.get("gamma_tab_main", default="Main"))
 
         # Info text area
         info_frame = ctk.CTkFrame(main_tab, fg_color=GAMMA_FG)
@@ -396,7 +397,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         self.gamma_update_label = ctk.CTkLabel(
             header_frame,
-            text="G.A.M.M.A. addons update available: False",
+            text=self.translator.get("gamma_addons_update", default="G.A.M.M.A. addons update available:") + self.translator.get("gamma_update_false", default=" False"),
             font=ctk.CTkFont(size=11),
             text_color="white",
             anchor="w"
@@ -405,7 +406,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
 
         self.moddb_update_label = ctk.CTkLabel(
             header_frame,
-            text="ModDB addons update available: False",
+            text=self.translator.get("gamma_moddb_update", default="ModDB addons update available:") + self.translator.get("gamma_update_false", default=" False"),
             font=ctk.CTkFont(size=11),
             text_color="white",
             anchor="w"
@@ -416,7 +417,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.word_wrap_var = ctk.BooleanVar(value=True)
         word_wrap_cb = ctk.CTkCheckBox(
             header_frame,
-            text="Word Wrap",
+            text=self.translator.get("gamma_word_wrap", default="Word Wrap"),
             variable=self.word_wrap_var,
             font=ctk.CTkFont(size=10),
             fg_color=GAMMA_PRIMARY
@@ -434,7 +435,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.info_textbox.pack(fill="both", expand=True, padx=15, pady=(0, 15))
 
         # Insert welcome message
-        welcome_text = """Welcome to the Gigantic Automated Modular Modpack for Anomaly installer
+        welcome_text = self.translator.get("gamma_welcome_text", default="""Welcome to the Gigantic Automated Modular Modpack for Anomaly installer
 
 Be sure to check out the discord #how-to-install channel for full instructions:
 https://www.discord.gg/stalker-gamma
@@ -443,8 +444,7 @@ Untick Check MD5 ONLY if your pack is already working and you want to update it.
 
 Check the update status above and click Install/Update GAMMA if needed.
 
-Currently working from the directory:
-""" + str(self.config.gamma_path or "Not set")
+Currently working from the directory:""") + "\n" + str(self.config.gamma_path or "Not set")
 
         self.info_textbox.insert("1.0", welcome_text)
         self.info_textbox.configure(state="disabled")
@@ -456,7 +456,7 @@ Currently working from the directory:
         # Anomaly path
         anomaly_label = ctk.CTkLabel(
             paths_frame,
-            text="Anomaly:",
+            text=self.translator.get("gamma_path_anomaly", default="Anomaly:"),
             font=ctk.CTkFont(size=11),
             width=80,
             anchor="w"
@@ -465,7 +465,7 @@ Currently working from the directory:
 
         self.anomaly_entry = ctk.CTkEntry(
             paths_frame,
-            placeholder_text="Anomaly path...",
+            placeholder_text=self.translator.get("gamma_anomaly_placeholder", default="Anomaly path..."),
             fg_color=GAMMA_BG,
             font=ctk.CTkFont(size=10)
         )
@@ -474,7 +474,7 @@ Currently working from the directory:
 
         anomaly_browse_btn = ctk.CTkButton(
             paths_frame,
-            text="Browse...",
+            text=self.translator.get("gamma_browse", default="Browse..."),
             width=80,
             height=28,
             fg_color=GAMMA_PRIMARY,
@@ -487,7 +487,7 @@ Currently working from the directory:
         # GAMMA path
         gamma_label = ctk.CTkLabel(
             paths_frame,
-            text="GAMMA:",
+            text=self.translator.get("gamma_path_gamma", default="GAMMA:"),
             font=ctk.CTkFont(size=11),
             width=80,
             anchor="w"
@@ -496,7 +496,7 @@ Currently working from the directory:
 
         self.gamma_entry = ctk.CTkEntry(
             paths_frame,
-            placeholder_text="GAMMA path...",
+            placeholder_text=self.translator.get("gamma_gamma_placeholder", default="GAMMA path..."),
             fg_color=GAMMA_BG,
             font=ctk.CTkFont(size=10)
         )
@@ -505,7 +505,7 @@ Currently working from the directory:
 
         gamma_browse_btn = ctk.CTkButton(
             paths_frame,
-            text="Browse...",
+            text=self.translator.get("gamma_browse", default="Browse..."),
             width=80,
             height=28,
             fg_color=GAMMA_PRIMARY,
@@ -518,7 +518,7 @@ Currently working from the directory:
         # Cache path
         cache_label = ctk.CTkLabel(
             paths_frame,
-            text="Cache:",
+            text=self.translator.get("gamma_path_cache", default="Cache:"),
             font=ctk.CTkFont(size=11),
             width=80,
             anchor="w"
@@ -527,7 +527,7 @@ Currently working from the directory:
 
         self.cache_entry = ctk.CTkEntry(
             paths_frame,
-            placeholder_text="Cache path...",
+            placeholder_text=self.translator.get("gamma_cache_placeholder", default="Cache path..."),
             fg_color=GAMMA_BG,
             font=ctk.CTkFont(size=10)
         )
@@ -536,7 +536,7 @@ Currently working from the directory:
 
         cache_browse_btn = ctk.CTkButton(
             paths_frame,
-            text="Browse...",
+            text=self.translator.get("gamma_browse", default="Browse..."),
             width=80,
             height=28,
             fg_color=GAMMA_PRIMARY,
@@ -550,12 +550,12 @@ Currently working from the directory:
 
     def _create_mods_list_tab(self):
         """Create mods list tab showing all mods with status."""
-        mods_tab = self.tabview.tab("Mods List")
+        mods_tab = self.tabview.tab(self.translator.get("gamma_tab_mods_list", default="Mods List"))
 
         # Header
         header = ctk.CTkLabel(
             mods_tab,
-            text="Installed Mods (Coming Soon)",
+            text=self.translator.get("gamma_mods_list_header", default="Installed Mods (Coming Soon)"),
             font=ctk.CTkFont(size=14, weight="bold"),
             text_color=GAMMA_PRIMARY
         )
@@ -568,12 +568,7 @@ Currently working from the directory:
         # Placeholder
         placeholder = ctk.CTkLabel(
             mods_scroll,
-            text="Mod list will be displayed here after installation.\n\n"
-                 "Features:\n"
-                 "• View all installed mods\n"
-                 "• Check mod status (enabled/disabled)\n"
-                 "• See mod versions\n"
-                 "• Enable/disable individual mods",
+            text=self.translator.get("gamma_mods_list_placeholder", default="Mod list will be displayed here after installation.\n\nFeatures:\n• View all installed mods\n• Check mod status (enabled/disabled)\n• See mod versions\n• Enable/disable individual mods"),
             font=ctk.CTkFont(size=12),
             text_color="gray",
             justify="left"
@@ -582,12 +577,12 @@ Currently working from the directory:
 
     def _create_gamma_updates_tab(self):
         """Create GAMMA updates tab for update detection."""
-        updates_tab = self.tabview.tab("GAMMA Updates")
+        updates_tab = self.tabview.tab(self.translator.get("gamma_tab_gamma_updates", default="GAMMA Updates"))
 
         # Header
         header = ctk.CTkLabel(
             updates_tab,
-            text="GAMMA Definition Updates (Coming Soon)",
+            text=self.translator.get("gamma_updates_header", default="GAMMA Definition Updates (Coming Soon)"),
             font=ctk.CTkFont(size=14, weight="bold"),
             text_color=GAMMA_PRIMARY
         )
@@ -600,12 +595,7 @@ Currently working from the directory:
         # Placeholder
         placeholder = ctk.CTkLabel(
             content_frame,
-            text="GAMMA update detection will be shown here.\n\n"
-                 "Features:\n"
-                 "• Check for new GAMMA releases\n"
-                 "• View changelog\n"
-                 "• One-click update\n"
-                 "• Version comparison",
+            text=self.translator.get("gamma_updates_placeholder", default="GAMMA update detection will be shown here.\n\nFeatures:\n• Check for new GAMMA releases\n• View changelog\n• One-click update\n• Version comparison"),
             font=ctk.CTkFont(size=12),
             text_color="gray",
             justify="left"
@@ -614,12 +604,12 @@ Currently working from the directory:
 
     def _create_moddb_updates_tab(self):
         """Create ModDB updates tab for individual mod updates."""
-        moddb_tab = self.tabview.tab("ModDB Updates")
+        moddb_tab = self.tabview.tab(self.translator.get("gamma_tab_moddb_updates", default="ModDB Updates"))
 
         # Header
         header = ctk.CTkLabel(
             moddb_tab,
-            text="ModDB Addon Updates (Coming Soon)",
+            text=self.translator.get("gamma_moddb_updates_header", default="ModDB Addon Updates (Coming Soon)"),
             font=ctk.CTkFont(size=14, weight="bold"),
             text_color=GAMMA_PRIMARY
         )
@@ -632,12 +622,7 @@ Currently working from the directory:
         # Placeholder
         placeholder = ctk.CTkLabel(
             content_frame,
-            text="Individual mod update detection will be shown here.\n\n"
-                 "Features:\n"
-                 "• Check each mod for updates on ModDB\n"
-                 "• Update individual mods\n"
-                 "• Batch update all outdated mods\n"
-                 "• View mod descriptions and changelogs",
+            text=self.translator.get("gamma_moddb_updates_placeholder", default="Individual mod update detection will be shown here.\n\nFeatures:\n• Check each mod for updates on ModDB\n• Update individual mods\n• Batch update all outdated mods\n• View mod descriptions and changelogs"),
             font=ctk.CTkFont(size=12),
             text_color="gray",
             justify="left"
@@ -646,12 +631,12 @@ Currently working from the directory:
 
     def _create_backup_tab(self):
         """Create backup management tab."""
-        backup_tab = self.tabview.tab("Backup")
+        backup_tab = self.tabview.tab(self.translator.get("gamma_tab_backup", default="Backup"))
 
         # Header
         header = ctk.CTkLabel(
             backup_tab,
-            text="Backup Management (Coming Soon)",
+            text=self.translator.get("gamma_backup_header", default="Backup Management (Coming Soon)"),
             font=ctk.CTkFont(size=14, weight="bold"),
             text_color=GAMMA_PRIMARY
         )
@@ -664,12 +649,7 @@ Currently working from the directory:
         # Placeholder
         placeholder = ctk.CTkLabel(
             content_frame,
-            text="Backup management will be available here.\n\n"
-                 "Features:\n"
-                 "• Create backups before updates\n"
-                 "• Restore previous installations\n"
-                 "• Manage backup storage\n"
-                 "• Backup compression",
+            text=self.translator.get("gamma_backup_placeholder", default="Backup management will be available here.\n\nFeatures:\n• Create backups before updates\n• Restore previous installations\n• Manage backup storage\n• Backup compression"),
             font=ctk.CTkFont(size=12),
             text_color="gray",
             justify="left"
@@ -685,7 +665,7 @@ Currently working from the directory:
         # Status label
         self.status_label = ctk.CTkLabel(
             progress_frame,
-            text="Ready",
+            text=self.translator.get("gamma_status_ready", default="Ready"),
             font=ctk.CTkFont(size=11),
             text_color="white",
             anchor="w"
@@ -704,7 +684,7 @@ Currently working from the directory:
         # Percentage label
         self.progress_label = ctk.CTkLabel(
             progress_frame,
-            text="0%",
+            text=self.translator.get("gamma_progress_initial", default="0%"),
             font=ctk.CTkFont(size=11),
             text_color="white",
             width=50
@@ -730,11 +710,17 @@ Currently working from the directory:
         """Handle install/update button click."""
         logging.info("Install/Update GAMMA clicked")
         # TODO: Implement actual installation logic
-        messagebox.showinfo("Info", "Installation will be implemented soon.\n\nThis button will trigger the full GAMMA installation process.")
+        messagebox.showinfo(
+            self.translator.get("gamma_info_title", default="Info"),
+            self.translator.get("gamma_install_message", default="Installation will be implemented soon.\n\nThis button will trigger the full GAMMA installation process.")
+        )
 
     def _on_first_install(self):
         """Handle first install initialization."""
-        messagebox.showinfo("Info", "First install initialization will configure your system for GAMMA.")
+        messagebox.showinfo(
+            self.translator.get("gamma_info_title", default="Info"),
+            self.translator.get("gamma_first_install_message", default="First install initialization will configure your system for GAMMA.")
+        )
 
     def _open_console_log(self):
         """Open console log window."""
@@ -759,17 +745,20 @@ Currently working from the directory:
 
     def _open_settings(self):
         """Open settings dialog."""
-        messagebox.showinfo("Settings", "Settings dialog coming soon.\n\nConfigure:\n• Download threads\n• Timeout values\n• Update check frequency")
+        messagebox.showinfo(
+            self.translator.get("gamma_settings", default="Settings"),
+            self.translator.get("gamma_settings_message", default="Settings dialog coming soon.\n\nConfigure:\n• Download threads\n• Timeout values\n• Update check frequency")
+        )
 
     def _browse_path(self, path_type: str):
         """Browse for directory path."""
         title_map = {
-            "anomaly": "Select Anomaly Directory",
-            "gamma": "Select GAMMA Directory",
-            "cache": "Select Cache Directory"
+            "anomaly": self.translator.get("gamma_select_anomaly", default="Select Anomaly Directory"),
+            "gamma": self.translator.get("gamma_select_gamma", default="Select GAMMA Directory"),
+            "cache": self.translator.get("gamma_select_cache", default="Select Cache Directory")
         }
 
-        path = filedialog.askdirectory(title=title_map.get(path_type, "Select Directory"))
+        path = filedialog.askdirectory(title=title_map.get(path_type, self.translator.get("gamma_select_directory", default="Select Directory")))
         if path:
             if path_type == "anomaly":
                 self.anomaly_entry.delete(0, "end")
@@ -791,7 +780,11 @@ class ConsoleLogWindow(ctk.CTkToplevel):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.title("GAMMA Installer - Console Log")
+        # Get translator
+        from shared.localization import get_translator
+        self.translator = get_translator()
+
+        self.title(self.translator.get("gamma_console_title", default="GAMMA Installer - Console Log"))
         self.geometry("900x500")
 
         # Main frame
@@ -804,7 +797,7 @@ class ConsoleLogWindow(ctk.CTkToplevel):
 
         title_label = ctk.CTkLabel(
             header_frame,
-            text="Installation Log",
+            text=self.translator.get("gamma_console_header", default="Installation Log"),
             font=ctk.CTkFont(size=14, weight="bold"),
             text_color=GAMMA_PRIMARY
         )
@@ -812,7 +805,7 @@ class ConsoleLogWindow(ctk.CTkToplevel):
 
         clear_button = ctk.CTkButton(
             header_frame,
-            text="Clear",
+            text=self.translator.get("gamma_console_clear", default="Clear"),
             width=80,
             height=28,
             fg_color=GAMMA_PRIMARY,

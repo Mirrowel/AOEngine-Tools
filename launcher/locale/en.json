@@ -114,5 +114,22 @@
     "gamma_moddb_updates_header": "ModDB Addon Updates (Coming Soon)",
     "gamma_moddb_updates_placeholder": "Individual mod update detection will be shown here.\n\nFeatures:\n• Check each mod for updates on ModDB\n• Update individual mods\n• Batch update all outdated mods\n• View mod descriptions and changelogs",
     "gamma_backup_header": "Backup Management (Coming Soon)",
-    "gamma_backup_placeholder": "Backup management will be available here.\n\nFeatures:\n• Create backups before updates\n• Restore previous installations\n• Manage backup storage\n• Backup compression"
+    "gamma_backup_placeholder": "Backup management will be available here.\n\nFeatures:\n• Create backups before updates\n• Restore previous installations\n• Manage backup storage\n• Backup compression",
+    "gamma_logo": "GAMMA",
+    "gamma_version": "v0.22.0.0",
+    "gamma_settings": "Settings",
+    "gamma_settings_message": "Settings dialog coming soon.\n\nConfigure:\n• Download threads\n• Timeout values\n• Update check frequency",
+    "gamma_progress_initial": "0%",
+    "gamma_info_title": "Info",
+    "gamma_install_message": "Installation will be implemented soon.\n\nThis button will trigger the full GAMMA installation process.",
+    "gamma_first_install_message": "First install initialization will configure your system for GAMMA.",
+    "gamma_anomaly_placeholder": "Anomaly path...",
+    "gamma_gamma_placeholder": "GAMMA path...",
+    "gamma_cache_placeholder": "Cache path...",
+    "gamma_select_anomaly": "Select Anomaly Directory",
+    "gamma_select_gamma": "Select GAMMA Directory",
+    "gamma_select_cache": "Select Cache Directory",
+    "gamma_select_directory": "Select Directory",
+    "gamma_update_false": " False",
+    "gamma_update_true": " True"
 }

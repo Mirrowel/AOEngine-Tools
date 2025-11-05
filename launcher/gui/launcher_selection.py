@@ -36,9 +36,7 @@ class LauncherSelectionWindow(ctk.CTk):
         super().__init__()
 
         self.title("AOEngine Tools - Launcher Selection")
-        self.geometry("700x450")
-        self.minsize(700, 450)
-        self.resizable(True, True)
+        self.resizable(False, False)  # Non-resizable, auto-sizes to content
 
         # Set up dark theme
         ctk.set_appearance_mode("dark")
@@ -55,29 +53,22 @@ class LauncherSelectionWindow(ctk.CTk):
 
     def _create_widgets(self):
         """Creates and lays out all GUI widgets using grid."""
-        # Configure root grid - center everything
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
-        # Main container - fixed size, centered
+        # Main container - auto-sizes to content
         main_container = ctk.CTkFrame(
             self,
             fg_color=FLY_AGARIC_BLACK,
             border_color=FLY_AGARIC_RED,
-            border_width=2,
-            width=680,
-            height=430
+            border_width=2
         )
-        main_container.grid(row=0, column=0, sticky="")  # No sticky = centered
-        main_container.grid_propagate(False)  # Maintain fixed size
+        main_container.pack(padx=15, pady=15)
 
         # Configure main container grid
         main_container.grid_rowconfigure(0, weight=0)  # Header
         main_container.grid_rowconfigure(1, weight=0)  # Subtitle
-        main_container.grid_rowconfigure(2, weight=1)  # Cards (expandable)
+        main_container.grid_rowconfigure(2, weight=0)  # Cards
         main_container.grid_rowconfigure(3, weight=0)  # Checkbox
         main_container.grid_rowconfigure(4, weight=0)  # Buttons
-        main_container.grid_columnconfigure(0, weight=1)
+        main_container.grid_columnconfigure(0, weight=0)
 
         # --- Header Row ---
         header_frame = ctk.CTkFrame(main_container, fg_color="transparent")
@@ -132,11 +123,12 @@ class LauncherSelectionWindow(ctk.CTk):
         subtitle_label.grid(row=1, column=0, pady=(0, 15))
 
         # --- Cards Container ---
-        cards_container = ctk.CTkFrame(main_container, fg_color="transparent")
-        cards_container.grid(row=2, column=0, sticky="nsew", padx=15, pady=10)
+        cards_container = ctk.CTkFrame(main_container, fg_color="transparent", width=650)
+        cards_container.grid(row=2, column=0, sticky="ew", padx=15, pady=10)
+        cards_container.grid_propagate(False)  # Maintain width
 
         # Configure cards grid - equal width columns
-        cards_container.grid_rowconfigure(0, weight=1)
+        cards_container.grid_rowconfigure(0, weight=0)
         cards_container.grid_columnconfigure(0, weight=1, minsize=300)
         cards_container.grid_columnconfigure(1, weight=1, minsize=300)
 
@@ -148,11 +140,11 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=3,
             corner_radius=10
         )
-        gamma_card.grid(row=0, column=0, padx=(0, 8), sticky="nsew")
+        gamma_card.grid(row=0, column=0, padx=(0, 8), sticky="ew")
 
         # Configure card grid
-        gamma_card.grid_rowconfigure(0, weight=1)  # Content expands
-        gamma_card.grid_rowconfigure(1, weight=0)  # Button fixed
+        gamma_card.grid_rowconfigure(0, weight=0)  # Content
+        gamma_card.grid_rowconfigure(1, weight=0)  # Button
         gamma_card.grid_columnconfigure(0, weight=1)
 
         # GAMMA content area (top section)
@@ -216,11 +208,11 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=3,
             corner_radius=10
         )
-        aoengine_card.grid(row=0, column=1, padx=(8, 0), sticky="nsew")
+        aoengine_card.grid(row=0, column=1, padx=(8, 0), sticky="ew")
 
         # Configure card grid
-        aoengine_card.grid_rowconfigure(0, weight=1)  # Content expands
-        aoengine_card.grid_rowconfigure(1, weight=0)  # Button fixed
+        aoengine_card.grid_rowconfigure(0, weight=0)  # Content
+        aoengine_card.grid_rowconfigure(1, weight=0)  # Button
         aoengine_card.grid_columnconfigure(0, weight=1)
 
         # AOEngine content area (top section)
