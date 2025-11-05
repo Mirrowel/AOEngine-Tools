@@ -85,22 +85,23 @@ class LauncherSelectionWindow(ctk.CTk):
         # --- Header Row ---
         header_frame = ctk.CTkFrame(main_container, fg_color="transparent")
         header_frame.grid(row=0, column=0, sticky="ew", padx=15, pady=(15, 5))
-        header_frame.grid_columnconfigure(0, weight=1)
-        header_frame.grid_columnconfigure(1, weight=0)
+        header_frame.grid_columnconfigure(0, weight=1)  # Left spacer
+        header_frame.grid_columnconfigure(1, weight=0)  # Title (centered)
+        header_frame.grid_columnconfigure(2, weight=1)  # Right side with language
 
-        # Title (centered)
+        # Title (centered in column 1)
         title_label = ctk.CTkLabel(
             header_frame,
             text=self.translator.get("selection_title", default="Choose Your Installation"),
             font=ctk.CTkFont(size=20, weight="bold"),
             text_color=FLY_AGARIC_WHITE
         )
-        title_label.grid(row=0, column=0, sticky="")  # Empty sticky = centered
+        title_label.grid(row=0, column=1, sticky="")
         self.text_widgets['title'] = title_label
 
-        # Language selector (right side)
+        # Language selector (right side, column 2)
         lang_frame = ctk.CTkFrame(header_frame, fg_color="transparent")
-        lang_frame.grid(row=0, column=1, sticky="e", padx=(10, 0))
+        lang_frame.grid(row=0, column=2, sticky="e")
 
         lang_label = ctk.CTkLabel(
             lang_frame,
@@ -193,14 +194,14 @@ class LauncherSelectionWindow(ctk.CTk):
         gamma_description = ctk.CTkLabel(
             gamma_content,
             text=self.translator.get(
-                "gamma_description_short",
-                default="Complete GAMMA modpack\nwith 150+ mods"
+                "gamma_description",
+                default="Install the complete GAMMA\nmodpack for S.T.A.L.K.E.R.\nAnomaly with 150+ mods\nand ModOrganizer2"
             ),
-            font=ctk.CTkFont(size=11),
-            text_color="gray80",
+            font=ctk.CTkFont(size=10),
+            text_color="gray70",
             justify="center"
         )
-        gamma_description.pack(pady=8)
+        gamma_description.pack(pady=5)
         self.text_widgets['gamma_description'] = gamma_description
 
         # Button at bottom (separate grid row)
@@ -265,14 +266,14 @@ class LauncherSelectionWindow(ctk.CTk):
         aoengine_description = ctk.CTkLabel(
             aoengine_content,
             text=self.translator.get(
-                "aoengine_description_short",
-                default="Manage AOEngine files\nwith auto-updates"
+                "aoengine_description",
+                default="Install and manage AOEngine\nfiles for S.T.A.L.K.E.R.\nAnomaly with automatic\nversion management"
             ),
-            font=ctk.CTkFont(size=11),
-            text_color="gray80",
+            font=ctk.CTkFont(size=10),
+            text_color="gray70",
             justify="center"
         )
-        aoengine_description.pack(pady=8)
+        aoengine_description.pack(pady=5)
         self.text_widgets['aoengine_description'] = aoengine_description
 
         # Button at bottom (separate grid row)
@@ -432,8 +433,8 @@ class LauncherSelectionWindow(ctk.CTk):
         )
         self.text_widgets['gamma_description'].configure(
             text=self.translator.get(
-                "gamma_description_short",
-                default="Complete GAMMA modpack\nwith 150+ mods"
+                "gamma_description",
+                default="Install the complete GAMMA\nmodpack for S.T.A.L.K.E.R.\nAnomaly with 150+ mods\nand ModOrganizer2"
             )
         )
         self.text_widgets['gamma_button'].configure(
@@ -449,8 +450,8 @@ class LauncherSelectionWindow(ctk.CTk):
         )
         self.text_widgets['aoengine_description'].configure(
             text=self.translator.get(
-                "aoengine_description_short",
-                default="Manage AOEngine files\nwith auto-updates"
+                "aoengine_description",
+                default="Install and manage AOEngine\nfiles for S.T.A.L.K.E.R.\nAnomaly with automatic\nversion management"
             )
         )
         self.text_widgets['aoengine_button'].configure(
