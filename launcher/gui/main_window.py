@@ -653,48 +653,32 @@ class ConsoleWindow(ctk.CTkToplevel):
         self.log_textbox.configure(state="disabled")
 
 class InfoWindow(ctk.CTkToplevel):
-    """About/Info window with grid-based centered layout."""
+    """About/Info window that auto-sizes to content."""
 
     def __init__(self, master, title, description):
         super().__init__(master)
         self.title(title)
-        self.geometry("550x400")
-        self.minsize(550, 400)
-        self.resizable(True, True)
+        self.resizable(False, False)  # Non-resizable
 
-        # Configure root grid - center everything
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
-        # Main container - fixed size, centered
+        # Main container - auto-sizes to content
         main_container = ctk.CTkFrame(
             self,
             fg_color=FLY_AGARIC_BLACK,
             border_color=FLY_AGARIC_RED,
-            border_width=2,
-            width=530,
-            height=380
+            border_width=2
         )
-        main_container.grid(row=0, column=0, sticky="")  # No sticky = centered
-        main_container.grid_propagate(False)  # Maintain fixed size
-
-        # Configure main container grid
-        main_container.grid_rowconfigure(0, weight=0)  # Description
-        main_container.grid_rowconfigure(1, weight=0)  # Creator
-        main_container.grid_rowconfigure(2, weight=0)  # GitHub
-        main_container.grid_rowconfigure(3, weight=0)  # Discord
-        main_container.grid_columnconfigure(0, weight=1)
+        main_container.pack(padx=10, pady=10, fill="both", expand=True)
 
         # App Description
         description_label = ctk.CTkLabel(
             main_container,
             text=description,
-            wraplength=500,
+            wraplength=480,
             justify="left",
             font=ctk.CTkFont(size=12),
             text_color=FLY_AGARIC_WHITE
         )
-        description_label.grid(row=0, column=0, padx=20, pady=(20, 15), sticky="ew")
+        description_label.pack(padx=20, pady=(20, 15), anchor="w")
 
         # Creator Info
         creator_label = ctk.CTkLabel(
@@ -704,7 +688,7 @@ class InfoWindow(ctk.CTkToplevel):
             font=ctk.CTkFont(size=11),
             text_color=FLY_AGARIC_WHITE
         )
-        creator_label.grid(row=1, column=0, padx=20, pady=5, sticky="ew")
+        creator_label.pack(padx=20, pady=5, anchor="w")
 
         # GitHub Link
         github_link = ctk.CTkLabel(
@@ -714,7 +698,7 @@ class InfoWindow(ctk.CTkToplevel):
             cursor="hand2",
             font=ctk.CTkFont(size=11)
         )
-        github_link.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
+        github_link.pack(padx=20, pady=5, anchor="w")
         github_link.bind("<Button-1>", lambda e: self._open_link("https://github.com/Mirrowel"))
 
         # Discord Link
@@ -725,8 +709,11 @@ class InfoWindow(ctk.CTkToplevel):
             cursor="hand2",
             font=ctk.CTkFont(size=11)
         )
-        discord_link.grid(row=3, column=0, padx=20, pady=(5, 20), sticky="ew")
+        discord_link.pack(padx=20, pady=(5, 20), anchor="w")
         discord_link.bind("<Button-1>", lambda e: self._open_link("https://discord.gg/8MY5gn3gRC"))
+
+        # Update window to fit content
+        self.update_idletasks()
 
         self.grab_set()
         self.focus_force()

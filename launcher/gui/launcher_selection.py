@@ -150,9 +150,14 @@ class LauncherSelectionWindow(ctk.CTk):
         )
         gamma_card.grid(row=0, column=0, padx=(0, 8), sticky="nsew")
 
-        # GAMMA content
+        # Configure card grid
+        gamma_card.grid_rowconfigure(0, weight=1)  # Content expands
+        gamma_card.grid_rowconfigure(1, weight=0)  # Button fixed
+        gamma_card.grid_columnconfigure(0, weight=1)
+
+        # GAMMA content area (top section)
         gamma_content = ctk.CTkFrame(gamma_card, fg_color="transparent")
-        gamma_content.pack(expand=True, fill="both", padx=15, pady=15)
+        gamma_content.grid(row=0, column=0, sticky="n", padx=15, pady=(15, 5))
 
         gamma_logo_label = ctk.CTkLabel(
             gamma_content,
@@ -189,9 +194,9 @@ class LauncherSelectionWindow(ctk.CTk):
         )
         gamma_description.pack(pady=8)
 
-        # Button packed at bottom
+        # Button at bottom (separate grid row)
         gamma_button = ctk.CTkButton(
-            gamma_content,
+            gamma_card,
             text=self.translator.get("gamma_install_button", default="Install GAMMA"),
             command=self._on_gamma_selected,
             fg_color=GAMMA_BLUE,
@@ -201,7 +206,7 @@ class LauncherSelectionWindow(ctk.CTk):
             height=38,
             corner_radius=8
         )
-        gamma_button.pack(side="bottom", fill="x", pady=(10, 0))
+        gamma_button.grid(row=1, column=0, sticky="ew", padx=15, pady=(5, 15))
 
         # --- AOEngine Card ---
         aoengine_card = ctk.CTkFrame(
@@ -213,9 +218,14 @@ class LauncherSelectionWindow(ctk.CTk):
         )
         aoengine_card.grid(row=0, column=1, padx=(8, 0), sticky="nsew")
 
-        # AOEngine content
+        # Configure card grid
+        aoengine_card.grid_rowconfigure(0, weight=1)  # Content expands
+        aoengine_card.grid_rowconfigure(1, weight=0)  # Button fixed
+        aoengine_card.grid_columnconfigure(0, weight=1)
+
+        # AOEngine content area (top section)
         aoengine_content = ctk.CTkFrame(aoengine_card, fg_color="transparent")
-        aoengine_content.pack(expand=True, fill="both", padx=15, pady=15)
+        aoengine_content.grid(row=0, column=0, sticky="n", padx=15, pady=(15, 5))
 
         aoengine_logo_label = ctk.CTkLabel(
             aoengine_content,
@@ -252,9 +262,9 @@ class LauncherSelectionWindow(ctk.CTk):
         )
         aoengine_description.pack(pady=8)
 
-        # Button packed at bottom
+        # Button at bottom (separate grid row)
         aoengine_button = ctk.CTkButton(
-            aoengine_content,
+            aoengine_card,
             text=self.translator.get("aoengine_launch_button", default="Launch AOEngine"),
             command=self._on_aoengine_selected,
             fg_color=FLY_AGARIC_RED,
@@ -264,7 +274,7 @@ class LauncherSelectionWindow(ctk.CTk):
             height=38,
             corner_radius=8
         )
-        aoengine_button.pack(side="bottom", fill="x", pady=(10, 0))
+        aoengine_button.grid(row=1, column=0, sticky="ew", padx=15, pady=(5, 15))
 
         # --- Sequential Checkbox ---
         sequential_checkbox = ctk.CTkCheckBox(
