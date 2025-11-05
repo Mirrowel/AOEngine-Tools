@@ -70,7 +70,21 @@ class GammaConfig(BaseModel):
 
         # Check for required directories
         required_dirs = ['bin', 'gamedata', 'appdata']
-        return all((self.anomaly_path / d).is_dir() for d in required_dirs)
+        if not all((self.anomaly_path / d).is_dir() for d in required_dirs):
+            return False
+
+        # Check for at least one executable
+        bin_path = self.anomaly_path / 'bin'
+        executables = ['AnomalyDX9.exe', 'AnomalyDX11.exe', 'AnomalyDX11AVX.exe']
+        if not any((bin_path / exe).is_file() for exe in executables):
+            return False
+
+        # Check for user.ltx
+        user_ltx = self.anomaly_path / 'appdata' / 'user.ltx'
+        if not user_ltx.is_file():
+            return False
+
+        return True
 
     def is_mo2_installed(self) -> bool:
         """Check if ModOrganizer2 is installed."""
