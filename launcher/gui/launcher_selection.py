@@ -36,8 +36,8 @@ class LauncherSelectionWindow(ctk.CTk):
         super().__init__()
 
         self.title("AOEngine Tools - Launcher Selection")
-        self.geometry("700x450")
-        self.minsize(700, 450)
+        self.geometry("700x540")
+        self.minsize(700, 540)
         self.resizable(True, True)
 
         # Set up dark theme
@@ -69,7 +69,7 @@ class LauncherSelectionWindow(ctk.CTk):
             border_color=FLY_AGARIC_RED,
             border_width=2,
             width=680,
-            height=430
+            height=520
         )
         main_container.grid(row=0, column=0, sticky="")  # No sticky = centered
         main_container.grid_propagate(False)  # Maintain fixed size
