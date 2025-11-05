@@ -8,3 +8,9 @@ packaging
 tkinterdnd2
 pydantic
 zstandard
+cloudscraper
+beautifulsoup4
+py7zr
+unrar
+lxml
+tenacity
