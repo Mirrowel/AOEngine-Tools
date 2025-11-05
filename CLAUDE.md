@@ -4,30 +4,39 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AOEngine Tools is a Python-based project containing two GUI applications for managing AOEngine releases:
+AOEngine Tools is a Python-based project containing three GUI applications for managing releases and installations:
 
-1. **Launcher**: End-user application for installing, updating, and managing AOEngine files with redundant fallback system for high availability
-2. **Uploader**: Developer-only tool for creating mirrored releases across multiple hosting platforms (GitHub Releases, Catbox) and maintaining a version-controlled index
+1. **GAMMA Launcher**: End-user application for installing S.T.A.L.K.E.R. G.A.M.M.A. modpack with optional AOEngine integration. Downloads Anomaly 1.5.3 from ModDB, sets up GAMMA structure, installs ModOrganizer 2, and can launch AOEngine Launcher after completion.
 
-Both applications are built with CustomTkinter GUI framework and packaged as standalone executables using PyInstaller.
+2. **AOEngine Launcher**: End-user application for installing, updating, and managing AOEngine files with redundant fallback system for high availability
+
+3. **Uploader**: Developer-only tool for creating mirrored releases across multiple hosting platforms (GitHub Releases, Catbox) and maintaining a version-controlled index
+
+All applications are built with CustomTkinter GUI framework and packaged as standalone executables using PyInstaller.
 
 ## Build Commands
 
 ### Build Executables
 ```bash
-# Build launcher executable
+# Build GAMMA Launcher executable
+build_gamma_launcher.bat
+
+# Build AOEngine Launcher executable
 build_launcher.bat
 
-# Build uploader executable
+# Build Uploader executable
 build_uploader.bat
 ```
 
 ### Run in Development
 ```bash
-# Run launcher (development mode)
+# Run GAMMA Launcher (development mode)
+python run_gamma_launcher_main.py
+
+# Run AOEngine Launcher (development mode)
 python run_launcher_main.py
 
-# Run uploader (development mode)
+# Run Uploader (development mode)
 python run_uploader_main.py
 ```
 
