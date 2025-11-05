@@ -131,5 +131,6 @@
     "gamma_select_cache": "Select Cache Directory",
     "gamma_select_directory": "Select Directory",
     "gamma_update_false": " False",
-    "gamma_update_true": " True"
+    "gamma_update_true": " True",
+    "view_details_button": "View Details"
 }
