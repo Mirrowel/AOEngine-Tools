@@ -24,6 +24,12 @@ from .models import (
     InstallationPhase,
     InstallationState,
 )
+from .installer import GammaInstaller, GammaInstallerError
+from .anomaly import AnomalyInstaller, AnomalyError
+from .mo2 import MO2Manager, MO2Error
+from .mod_manager import ModManager, ModManagerError
+from .moddb import ModDBDownloader, ModDBError
+from .archive import ArchiveExtractor, ArchiveError
 
 __all__ = [
     'GammaConfig',
@@ -33,4 +39,16 @@ __all__ = [
     'DownloadableModRecord',
     'InstallationPhase',
     'InstallationState',
+    'GammaInstaller',
+    'GammaInstallerError',
+    'AnomalyInstaller',
+    'AnomalyError',
+    'MO2Manager',
+    'MO2Error',
+    'ModManager',
+    'ModManagerError',
+    'ModDBDownloader',
+    'ModDBError',
+    'ArchiveExtractor',
+    'ArchiveError',
 ]
