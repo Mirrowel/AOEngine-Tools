@@ -187,12 +187,9 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color="gray80",
             justify="center"
         )
-        gamma_description.pack(pady=12)
+        gamma_description.pack(pady=8)
 
-        # Spacer to push button to bottom
-        gamma_spacer = ctk.CTkFrame(gamma_content, fg_color="transparent")
-        gamma_spacer.pack(expand=True, fill="both")
-
+        # Button packed at bottom
         gamma_button = ctk.CTkButton(
             gamma_content,
             text=self.translator.get("gamma_install_button", default="Install GAMMA"),
@@ -204,7 +201,7 @@ class LauncherSelectionWindow(ctk.CTk):
             height=38,
             corner_radius=8
         )
-        gamma_button.pack(fill="x", pady=(0, 5))
+        gamma_button.pack(side="bottom", fill="x", pady=(10, 0))
 
         # --- AOEngine Card ---
         aoengine_card = ctk.CTkFrame(
@@ -253,12 +250,9 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color="gray80",
             justify="center"
         )
-        aoengine_description.pack(pady=12)
+        aoengine_description.pack(pady=8)
 
-        # Spacer to push button to bottom
-        aoengine_spacer = ctk.CTkFrame(aoengine_content, fg_color="transparent")
-        aoengine_spacer.pack(expand=True, fill="both")
-
+        # Button packed at bottom
         aoengine_button = ctk.CTkButton(
             aoengine_content,
             text=self.translator.get("aoengine_launch_button", default="Launch AOEngine"),
@@ -270,7 +264,7 @@ class LauncherSelectionWindow(ctk.CTk):
             height=38,
             corner_radius=8
         )
-        aoengine_button.pack(fill="x", pady=(0, 5))
+        aoengine_button.pack(side="bottom", fill="x", pady=(10, 0))
 
         # --- Sequential Checkbox ---
         sequential_checkbox = ctk.CTkCheckBox(

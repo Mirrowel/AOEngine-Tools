@@ -653,34 +653,79 @@ class ConsoleWindow(ctk.CTkToplevel):
         self.log_textbox.configure(state="disabled")
 
 class InfoWindow(ctk.CTkToplevel):
+    """About/Info window with grid-based centered layout."""
+
     def __init__(self, master, title, description):
         super().__init__(master)
         self.title(title)
-        self.geometry("400x250")
+        self.geometry("550x400")
+        self.minsize(550, 400)
+        self.resizable(True, True)
 
+        # Configure root grid - center everything
+        self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        main_frame = ctk.CTkFrame(self, fg_color=FLY_AGARIC_BLACK,
-                                  border_color=FLY_AGARIC_RED, border_width=2)
-        main_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        main_frame.grid_columnconfigure(0, weight=1)
+        # Main container - fixed size, centered
+        main_container = ctk.CTkFrame(
+            self,
+            fg_color=FLY_AGARIC_BLACK,
+            border_color=FLY_AGARIC_RED,
+            border_width=2,
+            width=530,
+            height=380
+        )
+        main_container.grid(row=0, column=0, sticky="")  # No sticky = centered
+        main_container.grid_propagate(False)  # Maintain fixed size
+
+        # Configure main container grid
+        main_container.grid_rowconfigure(0, weight=0)  # Description
+        main_container.grid_rowconfigure(1, weight=0)  # Creator
+        main_container.grid_rowconfigure(2, weight=0)  # GitHub
+        main_container.grid_rowconfigure(3, weight=0)  # Discord
+        main_container.grid_columnconfigure(0, weight=1)
 
         # App Description
-        description_label = ctk.CTkLabel(main_frame, text=description, wraplength=380, justify="left")
-        description_label.grid(row=0, column=0, padx=15, pady=10, sticky="ew")
+        description_label = ctk.CTkLabel(
+            main_container,
+            text=description,
+            wraplength=500,
+            justify="left",
+            font=ctk.CTkFont(size=12),
+            text_color=FLY_AGARIC_WHITE
+        )
+        description_label.grid(row=0, column=0, padx=20, pady=(20, 15), sticky="ew")
 
         # Creator Info
-        creator_label = ctk.CTkLabel(main_frame, text=f"{get_translator().get('creator_label')}: Mirrowel", justify="left")
-        creator_label.grid(row=1, column=0, padx=15, pady=5, sticky="ew")
+        creator_label = ctk.CTkLabel(
+            main_container,
+            text=f"{get_translator().get('creator_label', default='Creator')}: Mirrowel",
+            justify="left",
+            font=ctk.CTkFont(size=11),
+            text_color=FLY_AGARIC_WHITE
+        )
+        creator_label.grid(row=1, column=0, padx=20, pady=5, sticky="ew")
 
         # GitHub Link
-        github_link = ctk.CTkLabel(main_frame, text=get_translator().get('github_link_label'), text_color="#6495ED", cursor="hand2")
-        github_link.grid(row=2, column=0, padx=15, pady=5, sticky="ew")
+        github_link = ctk.CTkLabel(
+            main_container,
+            text=get_translator().get('github_link_label', default='GitHub: Mirrowel'),
+            text_color="#6495ED",
+            cursor="hand2",
+            font=ctk.CTkFont(size=11)
+        )
+        github_link.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
         github_link.bind("<Button-1>", lambda e: self._open_link("https://github.com/Mirrowel"))
 
         # Discord Link
-        discord_link = ctk.CTkLabel(main_frame, text=get_translator().get('discord_link_label'), text_color="#7289DA", cursor="hand2")
-        discord_link.grid(row=3, column=0, padx=15, pady=5, sticky="ew")
+        discord_link = ctk.CTkLabel(
+            main_container,
+            text=get_translator().get('discord_link_label', default='Discord: 🍄 AOEngine Project'),
+            text_color="#7289DA",
+            cursor="hand2",
+            font=ctk.CTkFont(size=11)
+        )
+        discord_link.grid(row=3, column=0, padx=20, pady=(5, 20), sticky="ew")
         discord_link.bind("<Button-1>", lambda e: self._open_link("https://discord.gg/8MY5gn3gRC"))
 
         self.grab_set()

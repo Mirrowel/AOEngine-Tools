@@ -60,13 +60,15 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         """
         super().__init__(parent)
 
-        self.title("STALKER GAMMA Launcher - Mirrowel's AOEngine Tools")
         self.geometry("950x600")
         self.resizable(True, True)
 
         self.launch_aoengine_callback = launch_aoengine_callback
         self.config_manager = ConfigManager()
         self.translator = get_translator()
+
+        # Set title after translator is initialized
+        self.title(self.translator.get("gamma_window_title", default="STALKER GAMMA Launcher - Mirrowel's AOEngine Tools"))
 
         # Configuration
         self.config = GammaConfig(
