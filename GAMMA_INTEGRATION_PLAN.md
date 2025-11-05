@@ -1686,6 +1686,84 @@ window.resizable(True, True)
 - Build standalone executable (Phase 5)
 - Write comprehensive user documentation (Phase 7)
 
+#### Phase 4++: Selector Redesign & Workflow Simplification (COMPLETED - 2025-11-05)
+✅ **Auto-sizing Layout and Sequential Workflow Removal**
+
+Following user feedback on excessive padding and workflow complexity, the selector was completely redesigned with a cleaner, more intuitive interface.
+
+**UI Redesign - Auto-sizing Layout**:
+1. **Non-resizable with Auto-sizing**
+   - Changed from fixed 700x540 to auto-sizing with `pack()` layout
+   - Window automatically fits all content perfectly
+   - Non-resizable (`resizable=False`) for consistent appearance across systems
+   - No fixed dimensions - adapts to content naturally
+
+2. **Reduced Padding and Compact Design**
+   - Reduced padding throughout for cleaner, more professional look
+   - Card size fixed at 300px width
+   - Logo size reduced from 48px to 40px
+   - Tighter spacing between elements
+   - Bottom buttons reduced from 32px to 30px height
+
+3. **Short Descriptions with View Details**
+   - Show 2-line short descriptions by default (larger font: 12px)
+   - Added "View Details" button on each card
+   - Clicking "View Details" shows full 4-line description in dialog
+   - Short descriptions more readable than previous cramped 4-line version
+   - Uses `gamma_description_short` and `aoengine_description_short` keys
+
+4. **Improved Centering**
+   - Title properly centered with language selector staying top-right
+   - Subtitle centered below title
+   - Cards displayed side-by-side with equal spacing
+
+**Sequential Workflow Removal**:
+- **Removed**: "Install GAMMA first, then proceed to AOEngine" checkbox
+- **Reason**: Workflow was unclear and added unnecessary complexity
+- **New Approach**: GAMMA launcher will offer to launch AOEngine after successful installation
+  - After GAMMA install completes, user gets prompt: "GAMMA installed successfully. Launch AOEngine launcher?"
+  - User can choose Yes (launch AOEngine) or No (stay in GAMMA launcher)
+  - More intuitive than pre-selecting workflow before installation
+  - Gives user control after seeing GAMMA installation results
+
+**Implementation Details**:
+- Removed `sequential_mode` BooleanVar from selector
+- Removed `sequential_checkbox` widget
+- Simplified `_on_gamma_selected()` - no callback logic
+- Removed `_launch_aoengine_after_gamma()` method
+- GAMMA launcher constructor no longer accepts `launch_aoengine_callback` parameter
+- Added `_show_details()` method to display full descriptions in messagebox
+- Updated `_refresh_ui_text()` for new widget structure (no sequential checkbox)
+
+**Localization Updates**:
+- Added `view_details_button` key to en.json: "View Details"
+- Added `view_details_button` key to ru.json: "Подробнее"
+- Removed dependency on `sequential_mode_label` key
+
+**Files Modified**:
+- launcher/gui/launcher_selection.py (542 → 440 lines, -102 lines, simplified)
+- launcher/locale/en.json (added `view_details_button`)
+- launcher/locale/ru.json (added `view_details_button`)
+
+**User Experience Improvements**:
+- ✅ Window auto-sizes perfectly to content on all systems
+- ✅ Non-resizable prevents layout issues from resizing
+- ✅ Compact design with less wasted space
+- ✅ Short descriptions are readable at a glance
+- ✅ "View Details" provides full info when needed
+- ✅ Simpler workflow - no pre-selection needed
+- ✅ Post-install prompt gives user control after seeing results
+
+**Pending Implementation**:
+- ⏳ GAMMA launcher: Add prompt to launch AOEngine after successful install
+- ⏳ GAMMA launcher: Detect if AOEngine is available before showing prompt
+
+**Current Status**:
+- ✅ Selector redesign complete and tested
+- ✅ Sequential workflow removed
+- ✅ Auto-sizing works perfectly
+- ⏳ GAMMA launcher AOEngine prompt (next task)
+
 - **TBD**: Standalone launcher milestone reached
 - **TBD**: Release milestone reached
 
