@@ -51,6 +51,9 @@ class LauncherSelectionWindow(ctk.CTk):
         # State
         self.sequential_mode = ctk.BooleanVar(value=False)
 
+        # Store references to widgets that need text updates
+        self.text_widgets = {}
+
         self._create_widgets()
 
     def _create_widgets(self):
@@ -83,6 +86,7 @@ class LauncherSelectionWindow(ctk.CTk):
         header_frame = ctk.CTkFrame(main_container, fg_color="transparent")
         header_frame.grid(row=0, column=0, sticky="ew", padx=15, pady=(15, 5))
         header_frame.grid_columnconfigure(0, weight=1)
+        header_frame.grid_columnconfigure(1, weight=0)
 
         # Title (centered)
         title_label = ctk.CTkLabel(
@@ -91,7 +95,8 @@ class LauncherSelectionWindow(ctk.CTk):
             font=ctk.CTkFont(size=20, weight="bold"),
             text_color=FLY_AGARIC_WHITE
         )
-        title_label.grid(row=0, column=0)
+        title_label.grid(row=0, column=0, sticky="")  # Empty sticky = centered
+        self.text_widgets['title'] = title_label
 
         # Language selector (right side)
         lang_frame = ctk.CTkFrame(header_frame, fg_color="transparent")
@@ -130,6 +135,7 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color=FLY_AGARIC_WHITE
         )
         subtitle_label.grid(row=1, column=0, pady=(0, 15))
+        self.text_widgets['subtitle'] = subtitle_label
 
         # --- Cards Container ---
         cards_container = ctk.CTkFrame(main_container, fg_color="transparent")
@@ -173,6 +179,7 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color=GAMMA_BLUE
         )
         gamma_title.pack(pady=3)
+        self.text_widgets['gamma_title'] = gamma_title
 
         gamma_subtitle = ctk.CTkLabel(
             gamma_content,
@@ -181,6 +188,7 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color=FLY_AGARIC_WHITE
         )
         gamma_subtitle.pack(pady=2)
+        self.text_widgets['gamma_subtitle'] = gamma_subtitle
 
         gamma_description = ctk.CTkLabel(
             gamma_content,
@@ -193,6 +201,7 @@ class LauncherSelectionWindow(ctk.CTk):
             justify="center"
         )
         gamma_description.pack(pady=8)
+        self.text_widgets['gamma_description'] = gamma_description
 
         # Button at bottom (separate grid row)
         gamma_button = ctk.CTkButton(
@@ -207,6 +216,7 @@ class LauncherSelectionWindow(ctk.CTk):
             corner_radius=8
         )
         gamma_button.grid(row=1, column=0, sticky="ew", padx=15, pady=(5, 15))
+        self.text_widgets['gamma_button'] = gamma_button
 
         # --- AOEngine Card ---
         aoengine_card = ctk.CTkFrame(
@@ -241,6 +251,7 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color=FLY_AGARIC_RED
         )
         aoengine_title.pack(pady=3)
+        self.text_widgets['aoengine_title'] = aoengine_title
 
         aoengine_subtitle = ctk.CTkLabel(
             aoengine_content,
@@ -249,6 +260,7 @@ class LauncherSelectionWindow(ctk.CTk):
             text_color=FLY_AGARIC_WHITE
         )
         aoengine_subtitle.pack(pady=2)
+        self.text_widgets['aoengine_subtitle'] = aoengine_subtitle
 
         aoengine_description = ctk.CTkLabel(
             aoengine_content,
@@ -261,6 +273,7 @@ class LauncherSelectionWindow(ctk.CTk):
             justify="center"
         )
         aoengine_description.pack(pady=8)
+        self.text_widgets['aoengine_description'] = aoengine_description
 
         # Button at bottom (separate grid row)
         aoengine_button = ctk.CTkButton(
@@ -275,6 +288,7 @@ class LauncherSelectionWindow(ctk.CTk):
             corner_radius=8
         )
         aoengine_button.grid(row=1, column=0, sticky="ew", padx=15, pady=(5, 15))
+        self.text_widgets['aoengine_button'] = aoengine_button
 
         # --- Sequential Checkbox ---
         sequential_checkbox = ctk.CTkCheckBox(
@@ -291,6 +305,7 @@ class LauncherSelectionWindow(ctk.CTk):
             border_color=GAMMA_BLUE
         )
         sequential_checkbox.grid(row=3, column=0, pady=12)
+        self.text_widgets['sequential_checkbox'] = sequential_checkbox
 
         # --- Bottom Buttons ---
         button_frame = ctk.CTkFrame(main_container, fg_color="transparent")
@@ -311,6 +326,7 @@ class LauncherSelectionWindow(ctk.CTk):
             font=ctk.CTkFont(size=11)
         )
         settings_button.grid(row=0, column=0, sticky="w", padx=3)
+        self.text_widgets['settings_button'] = settings_button
 
         about_button = ctk.CTkButton(
             button_frame,
@@ -326,6 +342,7 @@ class LauncherSelectionWindow(ctk.CTk):
             font=ctk.CTkFont(size=11)
         )
         about_button.grid(row=0, column=1, padx=3)
+        self.text_widgets['about_button'] = about_button
 
         exit_button = ctk.CTkButton(
             button_frame,
@@ -341,6 +358,7 @@ class LauncherSelectionWindow(ctk.CTk):
             font=ctk.CTkFont(size=11)
         )
         exit_button.grid(row=0, column=2, sticky="e", padx=3)
+        self.text_widgets['exit_button'] = exit_button
 
     def _on_gamma_selected(self):
         """Handle GAMMA installation selection."""
@@ -394,12 +412,68 @@ class LauncherSelectionWindow(ctk.CTk):
 
     def _refresh_ui_text(self):
         """Refresh all UI text to current language."""
-        messagebox.showinfo(
-            self.translator.get("language_changed_title", default="Language Changed"),
-            self.translator.get(
-                "language_changed_message",
-                default="Language has been changed. Please restart the application for full effect."
+        # Update all text widgets with new language
+        self.text_widgets['title'].configure(
+            text=self.translator.get("selection_title", default="Choose Your Installation")
+        )
+        self.text_widgets['subtitle'].configure(
+            text=self.translator.get(
+                "selection_subtitle",
+                default="Select which component you want to install or launch"
             )
+        )
+
+        # GAMMA card
+        self.text_widgets['gamma_title'].configure(
+            text=self.translator.get("gamma_title", default="STALKER GAMMA")
+        )
+        self.text_widgets['gamma_subtitle'].configure(
+            text=self.translator.get("gamma_subtitle", default="Modpack")
+        )
+        self.text_widgets['gamma_description'].configure(
+            text=self.translator.get(
+                "gamma_description_short",
+                default="Complete GAMMA modpack\nwith 150+ mods"
+            )
+        )
+        self.text_widgets['gamma_button'].configure(
+            text=self.translator.get("gamma_install_button", default="Install GAMMA")
+        )
+
+        # AOEngine card
+        self.text_widgets['aoengine_title'].configure(
+            text=self.translator.get("aoengine_title", default="AOEngine")
+        )
+        self.text_widgets['aoengine_subtitle'].configure(
+            text=self.translator.get("aoengine_subtitle", default="Launcher")
+        )
+        self.text_widgets['aoengine_description'].configure(
+            text=self.translator.get(
+                "aoengine_description_short",
+                default="Manage AOEngine files\nwith auto-updates"
+            )
+        )
+        self.text_widgets['aoengine_button'].configure(
+            text=self.translator.get("aoengine_launch_button", default="Launch AOEngine")
+        )
+
+        # Sequential checkbox
+        self.text_widgets['sequential_checkbox'].configure(
+            text=self.translator.get(
+                "sequential_mode_label",
+                default="Install GAMMA first, then proceed to AOEngine"
+            )
+        )
+
+        # Bottom buttons
+        self.text_widgets['settings_button'].configure(
+            text=self.translator.get("settings_button", default="Settings")
+        )
+        self.text_widgets['about_button'].configure(
+            text=self.translator.get("about_button", default="About")
+        )
+        self.text_widgets['exit_button'].configure(
+            text=self.translator.get("exit_button", default="Exit")
         )
 
     def _open_settings(self):
