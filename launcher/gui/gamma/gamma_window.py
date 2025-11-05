@@ -24,6 +24,7 @@ from launcher.core.gamma import (
     InstallationPhase
 )
 from shared.localization import get_translator
+from launcher.core.config import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +65,7 @@ class GammaInstallerWindow(ctk.CTkToplevel):
         self.resizable(True, True)
 
         self.launch_aoengine_callback = launch_aoengine_callback
+        self.config_manager = ConfigManager()
         self.translator = get_translator()
 
         # Configuration
@@ -323,6 +325,32 @@ class GammaInstallerWindow(ctk.CTkToplevel):
             command=self._open_settings
         )
         settings_button.pack(pady=5, padx=10, fill="x")
+
+        # Language selector
+        lang_frame = ctk.CTkFrame(sidebar, fg_color="transparent")
+        lang_frame.pack(pady=(10, 5), padx=10, fill="x")
+
+        lang_label = ctk.CTkLabel(
+            lang_frame,
+            text=self.translator.get("language_label", default="Lang:"),
+            font=ctk.CTkFont(size=9),
+            text_color="gray70"
+        )
+        lang_label.pack(side="left", padx=(0, 5))
+
+        self.language_option_menu = ctk.CTkOptionMenu(
+            lang_frame,
+            values=["en", "ru"],
+            command=self._on_language_select,
+            fg_color=GAMMA_PRIMARY,
+            button_color=GAMMA_PRIMARY,
+            button_hover_color=GAMMA_SECONDARY,
+            width=50,
+            height=24,
+            font=ctk.CTkFont(size=10)
+        )
+        self.language_option_menu.set(self.translator.current_lang)
+        self.language_option_menu.pack(side="left")
 
     def _create_tabs(self, parent):
         """Create right content area with tabs."""
@@ -712,6 +740,20 @@ Currently working from the directory:
             self.console_window = ConsoleLogWindow(self)
         else:
             self.console_window.focus()
+
+    def _on_language_select(self, language: str):
+        """Handle language selection."""
+        self.translator.set_language(language)
+        self.config_manager.update_config(language=language)
+        
+        # Show message about restart
+        messagebox.showinfo(
+            self.translator.get("language_changed_title", default="Language Changed"),
+            self.translator.get(
+                "language_changed_message",
+                default="Language has been changed. Please restart the application for full effect."
+            )
+        )
 
     def _open_settings(self):
         """Open settings dialog."""

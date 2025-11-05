@@ -1,8 +1,8 @@
 """
-Launcher Selection Screen
+Launcher Selection Screen - Professional Compact Design
 
 Provides the initial choice between GAMMA installation and AOEngine launcher.
-Users can select which component to launch, with an option for sequential installation.
+Ultra-compact design that fits everything on screen beautifully.
 """
 
 import customtkinter as ctk
@@ -11,6 +11,7 @@ import logging
 from pathlib import Path
 
 from shared.localization import get_translator
+from launcher.core.config import ConfigManager
 
 # Theme colors
 FLY_AGARIC_RED = "#A52A2A"
@@ -22,24 +23,28 @@ GAMMA_ORANGE = "#FF6B35"
 
 class LauncherSelectionWindow(ctk.CTk):
     """
-    Initial launcher selection screen.
+    Initial launcher selection screen - professional compact design.
 
-    Presents users with a choice between GAMMA modpack installation
-    and AOEngine launcher, with an option for sequential installation.
+    Features:
+    - Dual-card layout with clear visual distinction
+    - Language selector in top-right
+    - Compact sizing - fits perfectly on screen
+    - Professional appearance matching GAMMA launcher quality
     """
 
     def __init__(self):
         super().__init__()
 
         self.title("AOEngine Tools - Launcher Selection")
-        self.geometry("700x450")
+        self.geometry("650x400")
         self.resizable(True, True)
 
         # Set up dark theme
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("dark-blue")
 
-        # Get translator
+        # Config and translator
+        self.config_manager = ConfigManager()
         self.translator = get_translator()
 
         # State
@@ -56,16 +61,51 @@ class LauncherSelectionWindow(ctk.CTk):
             border_color=FLY_AGARIC_RED,
             border_width=2
         )
-        main_frame.pack(pady=10, padx=10, fill="both", expand=True)
+        main_frame.pack(pady=8, padx=8, fill="both", expand=True)
 
-        # Title
+        # Configure grid
+        main_frame.grid_rowconfigure(2, weight=0)  # Cards don't expand
+        main_frame.grid_columnconfigure(0, weight=1)
+
+        # Top bar with title and language selector
+        top_bar = ctk.CTkFrame(main_frame, fg_color="transparent")
+        top_bar.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
+        top_bar.grid_columnconfigure(0, weight=1)
+
+        # Title (centered)
         title_label = ctk.CTkLabel(
-            main_frame,
+            top_bar,
             text=self.translator.get("selection_title", default="Choose Your Installation"),
-            font=ctk.CTkFont(size=20, weight="bold"),
+            font=ctk.CTkFont(size=18, weight="bold"),
             text_color=FLY_AGARIC_WHITE
         )
-        title_label.pack(pady=(15, 5))
+        title_label.grid(row=0, column=0, columnspan=3)
+
+        # Language selector (top-right)
+        lang_frame = ctk.CTkFrame(top_bar, fg_color="transparent")
+        lang_frame.grid(row=0, column=3, sticky="e")
+
+        lang_label = ctk.CTkLabel(
+            lang_frame,
+            text=self.translator.get("language_switcher_label", default="Language:"),
+            font=ctk.CTkFont(size=9),
+            text_color="gray70"
+        )
+        lang_label.pack(side="left", padx=(0, 3))
+
+        self.language_option_menu = ctk.CTkOptionMenu(
+            lang_frame,
+            values=["en", "ru"],
+            command=self._on_language_select,
+            fg_color=FLY_AGARIC_RED,
+            button_color=FLY_AGARIC_RED,
+            button_hover_color=FLY_AGARIC_WHITE,
+            width=60,
+            height=24,
+            font=ctk.CTkFont(size=10)
+        )
+        self.language_option_menu.set(self.translator.current_lang)
+        self.language_option_menu.pack(side="left")
 
         # Subtitle
         subtitle_label = ctk.CTkLabel(
@@ -74,16 +114,16 @@ class LauncherSelectionWindow(ctk.CTk):
                 "selection_subtitle",
                 default="Select which component you want to install or launch"
             ),
-            font=ctk.CTkFont(size=12),
+            font=ctk.CTkFont(size=11),
             text_color=FLY_AGARIC_WHITE
         )
-        subtitle_label.pack(pady=(0, 15))
+        subtitle_label.grid(row=1, column=0, pady=(0, 10))
 
-        # Cards container
-        cards_frame = ctk.CTkFrame(main_frame, fg_color="transparent")
-        cards_frame.pack(pady=5, padx=15, fill="both", expand=True)
+        # Cards container - FIXED HEIGHT
+        cards_frame = ctk.CTkFrame(main_frame, fg_color="transparent", height=200)
+        cards_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=5)
+        cards_frame.grid_propagate(False)  # Prevent expansion
         cards_frame.grid_columnconfigure((0, 1), weight=1)
-        cards_frame.grid_rowconfigure(0, weight=1)
 
         # --- GAMMA Card ---
         gamma_card = ctk.CTkFrame(
@@ -93,44 +133,43 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=3,
             corner_radius=10
         )
-        gamma_card.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
+        gamma_card.grid(row=0, column=0, padx=5, pady=0, sticky="nsew")
 
-        # GAMMA Logo placeholder (text for now)
+        # GAMMA Logo
         gamma_logo_label = ctk.CTkLabel(
             gamma_card,
             text="🎮",
-            font=ctk.CTkFont(size=42)
+            font=ctk.CTkFont(size=36)
         )
-        gamma_logo_label.pack(pady=(15, 5))
+        gamma_logo_label.pack(pady=(12, 3))
 
         gamma_title = ctk.CTkLabel(
             gamma_card,
             text=self.translator.get("gamma_title", default="STALKER GAMMA"),
-            font=ctk.CTkFont(size=18, weight="bold"),
+            font=ctk.CTkFont(size=16, weight="bold"),
             text_color=GAMMA_BLUE
         )
-        gamma_title.pack(pady=3)
+        gamma_title.pack(pady=2)
 
         gamma_subtitle = ctk.CTkLabel(
             gamma_card,
             text=self.translator.get("gamma_subtitle", default="Modpack"),
-            font=ctk.CTkFont(size=12),
+            font=ctk.CTkFont(size=11),
             text_color=FLY_AGARIC_WHITE
         )
-        gamma_subtitle.pack(pady=2)
+        gamma_subtitle.pack(pady=1)
 
         gamma_description = ctk.CTkLabel(
             gamma_card,
             text=self.translator.get(
-                "gamma_description",
-                default="Install the complete GAMMA\nmodpack for S.T.A.L.K.E.R.\nAnomaly with 150+ mods\nand ModOrganizer2"
+                "gamma_description_short",
+                default="Complete GAMMA modpack\nwith 150+ mods"
             ),
-            font=ctk.CTkFont(size=11),
-            text_color=FLY_AGARIC_WHITE,
-            justify="center",
-            wraplength=250
+            font=ctk.CTkFont(size=10),
+            text_color="gray80",
+            justify="center"
         )
-        gamma_description.pack(pady=10, padx=15)
+        gamma_description.pack(pady=8)
 
         gamma_button = ctk.CTkButton(
             gamma_card,
@@ -139,11 +178,11 @@ class LauncherSelectionWindow(ctk.CTk):
             fg_color=GAMMA_BLUE,
             hover_color=GAMMA_ORANGE,
             text_color="white",
-            font=ctk.CTkFont(size=13, weight="bold"),
-            height=36,
+            font=ctk.CTkFont(size=12, weight="bold"),
+            height=34,
             corner_radius=8
         )
-        gamma_button.pack(pady=(5, 20), padx=15, fill="x")
+        gamma_button.pack(pady=(5, 15), padx=12, fill="x")
 
         # --- AOEngine Card ---
         aoengine_card = ctk.CTkFrame(
@@ -153,44 +192,43 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=3,
             corner_radius=10
         )
-        aoengine_card.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")
+        aoengine_card.grid(row=0, column=1, padx=5, pady=0, sticky="nsew")
 
-        # AOEngine Logo placeholder (text for now)
+        # AOEngine Logo
         aoengine_logo_label = ctk.CTkLabel(
             aoengine_card,
             text="🍄",
-            font=ctk.CTkFont(size=42)
+            font=ctk.CTkFont(size=36)
         )
-        aoengine_logo_label.pack(pady=(15, 5))
+        aoengine_logo_label.pack(pady=(12, 3))
 
         aoengine_title = ctk.CTkLabel(
             aoengine_card,
             text=self.translator.get("aoengine_title", default="AOEngine"),
-            font=ctk.CTkFont(size=18, weight="bold"),
+            font=ctk.CTkFont(size=16, weight="bold"),
             text_color=FLY_AGARIC_RED
         )
-        aoengine_title.pack(pady=3)
+        aoengine_title.pack(pady=2)
 
         aoengine_subtitle = ctk.CTkLabel(
             aoengine_card,
             text=self.translator.get("aoengine_subtitle", default="Launcher"),
-            font=ctk.CTkFont(size=12),
+            font=ctk.CTkFont(size=11),
             text_color=FLY_AGARIC_WHITE
         )
-        aoengine_subtitle.pack(pady=2)
+        aoengine_subtitle.pack(pady=1)
 
         aoengine_description = ctk.CTkLabel(
             aoengine_card,
             text=self.translator.get(
-                "aoengine_description",
-                default="Install and manage AOEngine\nfiles for S.T.A.L.K.E.R.\nAnomaly with automatic\nversion management"
+                "aoengine_description_short",
+                default="Manage AOEngine files\nwith auto-updates"
             ),
-            font=ctk.CTkFont(size=11),
-            text_color=FLY_AGARIC_WHITE,
-            justify="center",
-            wraplength=250
+            font=ctk.CTkFont(size=10),
+            text_color="gray80",
+            justify="center"
         )
-        aoengine_description.pack(pady=10, padx=15)
+        aoengine_description.pack(pady=8)
 
         aoengine_button = ctk.CTkButton(
             aoengine_card,
@@ -199,34 +237,31 @@ class LauncherSelectionWindow(ctk.CTk):
             fg_color=FLY_AGARIC_RED,
             hover_color=FLY_AGARIC_WHITE,
             text_color=FLY_AGARIC_WHITE,
-            font=ctk.CTkFont(size=13, weight="bold"),
-            height=36,
+            font=ctk.CTkFont(size=12, weight="bold"),
+            height=34,
             corner_radius=8
         )
-        aoengine_button.pack(pady=(5, 20), padx=15, fill="x")
+        aoengine_button.pack(pady=(5, 15), padx=12, fill="x")
 
         # Sequential mode checkbox
-        sequential_frame = ctk.CTkFrame(main_frame, fg_color="transparent")
-        sequential_frame.pack(pady=8)
-
         sequential_checkbox = ctk.CTkCheckBox(
-            sequential_frame,
+            main_frame,
             text=self.translator.get(
                 "sequential_mode_label",
                 default="Install GAMMA first, then proceed to AOEngine"
             ),
             variable=self.sequential_mode,
-            font=ctk.CTkFont(size=11),
+            font=ctk.CTkFont(size=10),
             text_color=FLY_AGARIC_WHITE,
             fg_color=GAMMA_BLUE,
             hover_color=GAMMA_ORANGE,
             border_color=GAMMA_BLUE
         )
-        sequential_checkbox.pack()
+        sequential_checkbox.grid(row=3, column=0, pady=10)
 
         # Bottom button frame
         button_frame = ctk.CTkFrame(main_frame, fg_color="transparent")
-        button_frame.pack(pady=8, padx=15, fill="x")
+        button_frame.grid(row=4, column=0, pady=(5, 8), padx=10, sticky="ew")
         button_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
         settings_button = ctk.CTkButton(
@@ -238,8 +273,9 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=2,
             text_color=FLY_AGARIC_WHITE,
             hover_color=FLY_AGARIC_RED,
-            width=90,
-            height=32
+            width=85,
+            height=30,
+            font=ctk.CTkFont(size=10)
         )
         settings_button.grid(row=0, column=0, sticky="w", padx=2)
 
@@ -252,8 +288,9 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=2,
             text_color=FLY_AGARIC_WHITE,
             hover_color=FLY_AGARIC_RED,
-            width=90,
-            height=32
+            width=85,
+            height=30,
+            font=ctk.CTkFont(size=10)
         )
         about_button.grid(row=0, column=1, padx=2)
 
@@ -266,8 +303,9 @@ class LauncherSelectionWindow(ctk.CTk):
             border_width=2,
             text_color=FLY_AGARIC_WHITE,
             hover_color=FLY_AGARIC_RED,
-            width=90,
-            height=32
+            width=85,
+            height=30,
+            font=ctk.CTkFont(size=10)
         )
         exit_button.grid(row=0, column=2, sticky="e", padx=2)
 
@@ -313,13 +351,31 @@ class LauncherSelectionWindow(ctk.CTk):
         app = App()
         app.mainloop()
 
+    def _on_language_select(self, language: str):
+        """Handle language selection."""
+        self.translator.set_language(language)
+        self.config_manager.update_config(language=language)
+
+        # Refresh UI text
+        self._refresh_ui_text()
+
+    def _refresh_ui_text(self):
+        """Refresh all UI text to current language."""
+        # This would need to recreate widgets or update all text
+        # For now, just show a message
+        messagebox.showinfo(
+            self.translator.get("language_changed_title", default="Language Changed"),
+            self.translator.get(
+                "language_changed_message",
+                default="Language has been changed. Please restart the application for full effect."
+            )
+        )
+
     def _open_settings(self):
         """Open settings dialog."""
-        # TODO: Create a unified settings dialog
         messagebox.showinfo(
-            "Settings",
-            "Settings dialog coming soon.\n\n"
-            "For now, use the individual launcher settings."
+            self.translator.get("settings_button", default="Settings"),
+            "Settings dialog coming soon.\n\nFor now, use the individual launcher settings."
         )
 
     def _open_about(self):
