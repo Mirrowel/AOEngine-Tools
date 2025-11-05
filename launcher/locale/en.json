@@ -55,5 +55,22 @@
     "launcher_description": "A tool for managing and updating 🍄 AOEngine installations.",
     "creator_label": "Creator",
     "github_link_label": "GitHub: Mirrowel",
-    "discord_link_label": "Discord: 🍄 AOEngine Project"
+    "discord_link_label": "Discord: 🍄 AOEngine Project",
+
+    "selection_title": "Choose Your Installation",
+    "selection_subtitle": "Select which component you want to install or launch",
+    "gamma_title": "STALKER GAMMA",
+    "gamma_subtitle": "Modpack",
+    "gamma_description": "Install the complete GAMMA\nmodpack for S.T.A.L.K.E.R.\nAnomaly with 150+ mods\nand ModOrganizer2",
+    "gamma_install_button": "Install GAMMA",
+    "aoengine_title": "AOEngine",
+    "aoengine_subtitle": "Launcher",
+    "aoengine_description": "Install and manage AOEngine\nfiles for S.T.A.L.K.E.R.\nAnomaly with automatic\nversion management",
+    "aoengine_launch_button": "Launch AOEngine",
+    "sequential_mode_label": "Install GAMMA first, then proceed to AOEngine",
+    "settings_button": "Settings",
+    "about_button": "About",
+    "exit_button": "Exit",
+    "about_window_title": "About AOEngine Tools",
+    "about_description": "AOEngine Tools v2.0.0\nGAMMA Integration Edition\n\nA unified launcher for S.T.A.L.K.E.R. Anomaly modding.\n\nComponents:\n• GAMMA Installer - Install STALKER GAMMA modpack\n• AOEngine Launcher - Manage AOEngine files\n• Uploader Tool - Developer release management"
 }

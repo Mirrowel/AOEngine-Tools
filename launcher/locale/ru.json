@@ -55,5 +55,22 @@
     "launcher_description": "Инструмент для управления и обновления установок 🍄 AOEngine.",
     "creator_label": "Создатель",
     "github_link_label": "GitHub: Mirrowel",
-    "discord_link_label": "Discord: Проект 🍄 AOEngine"
+    "discord_link_label": "Discord: Проект 🍄 AOEngine",
+
+    "selection_title": "Выберите установку",
+    "selection_subtitle": "Выберите компонент для установки или запуска",
+    "gamma_title": "STALKER GAMMA",
+    "gamma_subtitle": "Модпак",
+    "gamma_description": "Установить полный модпак\nGAMMA для S.T.A.L.K.E.R.\nАномали с 150+ модами\nи ModOrganizer2",
+    "gamma_install_button": "Установить GAMMA",
+    "aoengine_title": "AOEngine",
+    "aoengine_subtitle": "Лаунчер",
+    "aoengine_description": "Установить и управлять\nфайлами AOEngine для\nS.T.A.L.K.E.R. Аномали\nс автоматическим\nуправлением версиями",
+    "aoengine_launch_button": "Запустить AOEngine",
+    "sequential_mode_label": "Сначала установить GAMMA, затем перейти к AOEngine",
+    "settings_button": "Настройки",
+    "about_button": "О программе",
+    "exit_button": "Выход",
+    "about_window_title": "О программе AOEngine Tools",
+    "about_description": "AOEngine Tools v2.0.0\nИздание с интеграцией GAMMA\n\nЕдиный лаунчер для моддинга S.T.A.L.K.E.R. Аномали.\n\nКомпоненты:\n• Установщик GAMMA - Установка модпака STALKER GAMMA\n• Лаунчер AOEngine - Управление файлами AOEngine\n• Загрузчик - Управление релизами для разработчиков"
 }
