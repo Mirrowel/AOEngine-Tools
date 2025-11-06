@@ -126,14 +126,14 @@ class LauncherSelectionWindow(ctk.CTk):
             border_color=GAMMA_BLUE,
             border_width=3,
             corner_radius=10,
-            width=300
+            width=340
         )
         gamma_card.pack(side="left", padx=(0, 8), fill="both", expand=True)
         gamma_card.pack_propagate(False)  # Maintain size
 
         # GAMMA content
         gamma_content = ctk.CTkFrame(gamma_card, fg_color="transparent")
-        gamma_content.pack(fill="both", expand=True, padx=15, pady=10)
+        gamma_content.pack(fill="both", expand=True, padx=12, pady=10)
 
         gamma_logo_label = ctk.CTkLabel(
             gamma_content,
@@ -192,7 +192,7 @@ class LauncherSelectionWindow(ctk.CTk):
             height=35,
             corner_radius=8
         )
-        gamma_button.pack(side="bottom", pady=(0, 5), padx=10, fill="x")
+        gamma_button.pack(side="bottom", pady=(0, 5), padx=8, fill="x")
         self.text_widgets['gamma_button'] = gamma_button
 
         # --- AOEngine Card ---
@@ -202,14 +202,14 @@ class LauncherSelectionWindow(ctk.CTk):
             border_color=FLY_AGARIC_RED,
             border_width=3,
             corner_radius=10,
-            width=300
+            width=340
         )
         aoengine_card.pack(side="left", padx=(8, 0), fill="both", expand=True)
         aoengine_card.pack_propagate(False)  # Maintain size
 
         # AOEngine content
         aoengine_content = ctk.CTkFrame(aoengine_card, fg_color="transparent")
-        aoengine_content.pack(fill="both", expand=True, padx=15, pady=10)
+        aoengine_content.pack(fill="both", expand=True, padx=12, pady=10)
 
         aoengine_logo_label = ctk.CTkLabel(
             aoengine_content,
@@ -268,7 +268,7 @@ class LauncherSelectionWindow(ctk.CTk):
             height=35,
             corner_radius=8
         )
-        aoengine_button.pack(side="bottom", pady=(0, 5), padx=10, fill="x")
+        aoengine_button.pack(side="bottom", pady=(0, 5), padx=8, fill="x")
         self.text_widgets['aoengine_button'] = aoengine_button
 
         # --- Bottom Buttons ---
